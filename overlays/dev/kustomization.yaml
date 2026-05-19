@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: dev
 resources:
   - ../../base
+  - db-credentials-sealed.yaml
 patches:
   - path: replica-patch.yaml
