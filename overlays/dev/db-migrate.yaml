@@ -1,0 +1,26 @@
+# overlays/dev/db-migrate.yaml
+# PreSync hook that simulates a database migration before deployment
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  ttlSecondsAfterFinished: 120
+  template:
+    spec:
+      containers:
+        - name: migrate
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Starting database migration..."
+              echo "Applying schema changes..."
+              sleep 5
+              echo "Migration complete."
+      restartPolicy: Never
+  backoffLimit: 1

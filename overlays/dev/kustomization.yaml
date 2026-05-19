@@ -4,6 +4,7 @@ namespace: dev
 resources:
   - ../../base
   - db-credentials-sealed.yaml
+  - db-migrate.yaml
 patches:
   - path: replica-patch.yaml
 images:
