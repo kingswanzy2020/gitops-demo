@@ -1,0 +1,23 @@
+name: Update Image Tag
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "New nginx image tag"
+        required: true
+        default: "1.25.3"
+jobs:
+  update-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update image tag
+        run: |
+          sed -i "s|newTag: .*|newTag: ${{ github.event.inputs.image_tag }}|" overlays/dev/kustomization.yaml
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: update nginx image tag to ${{ github.event.inputs.image_tag }}"
+          title: "chore: update nginx image tag to ${{ github.event.inputs.image_tag }}"
+          branch: update-image-tag-${{ github.event.inputs.image_tag }}
+          body: "Automated image tag update via GitHub Actions."

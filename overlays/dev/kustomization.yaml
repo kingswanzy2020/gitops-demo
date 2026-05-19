@@ -6,3 +6,6 @@ resources:
   - db-credentials-sealed.yaml
 patches:
   - path: replica-patch.yaml
+images:
+  - name: nginx
+    newTag: 1.25.0

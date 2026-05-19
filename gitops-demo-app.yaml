@@ -1,0 +1,25 @@
+# ArgoCD Application definition - tells ArgoCD what to deploy and where
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitops-demo
+  namespace: argocd
+spec:
+  # Use the default ArgoCD project
+  project: default
+  source:
+    # Your GitHub repository URL
+    repoURL: https://github.com/kingswanzy2020/gitops-demo
+    # Track the main branch
+    targetRevision: main
+    # Render manifests from the dev overlay
+    path: overlays/dev
+  destination:
+    # Deploy to the same cluster ArgoCD runs in
+    server: https://kubernetes.default.svc
+    namespace: dev
+    # Automatically sync changes from Git to the cluster
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
