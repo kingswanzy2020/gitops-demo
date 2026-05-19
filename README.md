@@ -1,2 +1,2 @@
 # gitops-demo
-Test demo project structure for GitOps workflow
+This is a demo project struture for a GitOps workflow
